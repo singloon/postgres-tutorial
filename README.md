@@ -1,16 +1,8 @@
 ### Postgres tutorial
 
 ## Docker build & run
-1) `docker build -t dvd .`
-2) `docker run --name dvd -e POSTGRES_PASSWORD=mysecretpassword -d dvd`
+1) `docker build -t dvdrental .`
+2) `docker run -t --name dvdrental -p 5432:5432 dvdrental`
 
 ## Restore backup
-### psql
-1) `docker run -it --rm --link dvd:postgres postgres psql -h postgres -U postgres`
-2) `CREATE DATABASE dvdrental;`
-`CREATE DATABASE pagila;`
-`USE DATABASE dvdrental;`
-`DROP SCHEMA public CASCADE;`
-`\q`
-
-3) `docker exec dvd sh -c "pg_restore -U postgres -C -d dvdrental /var/lib/postgresql/backup/backup.tar"`
+1) `docker exec dvdrental sh -c "pg_restore -U postgres -d dvdrental /var/lib/postgresql/backup/backup.tar"`
